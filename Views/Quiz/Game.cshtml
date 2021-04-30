@@ -1,0 +1,65 @@
+﻿@{
+    Layout = "_Layout";
+}
+@model Question
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-sm-12 col-md-10 col-lg-8 col-xl-7">
+            <p align="right" id="timer" value="@ViewData["timeout"]" class="timer">
+                @ViewData["timeout"]
+            </p>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-sm-12 col-md-10 col-lg-8 col-xl-7">
+
+            <div class="alert alert-success question-custom" role="alert">
+               @Model.ContentQuestion
+            </div>
+
+            <div class="container-fluid">
+
+                <div class="row">
+                    @for (int i = 0; i < Model.answers.Count; i++)
+                    {
+                        if (i < 2)
+                        {
+                            <div class="col-sm-12 col-md-6">
+                                
+                                <form method="post" asp-controller="Quiz" asp-action="CheckAnswer">
+                                    <input type="hidden" value="@Model.QuestionNumber" id="QuestionId" name="QuestionId" />
+                                    <input type="hidden" value="@Model.answers[i].Type" id="AnswerType" name="AnswerType" />
+                                    <button type="submit" class="alert alert-success btn-custom" role="alert">
+                                        @Model.answers[i].Type @Model.answers[i].contentAnswer
+                                    </button>
+                                </form>
+                            </div>
+                        }
+                    }
+                </div>
+
+                <div class="row">
+
+                    @for (int i = 0; i < Model.answers.Count; i++)
+                    {
+                        if (i > 1)
+                        {
+                            <div class="col-sm-12 col-md-6">
+                                <form method="post" asp-controller="Quiz" asp-action="CheckAnswer">
+                                    <br />
+                                    <input type="hidden" value="@Model.QuestionNumber" id="QuestionId" name="QuestionId" />
+                                    <input type="hidden" value="@Model.answers[i].Type" id="AnswerType" name="AnswerType" />
+                                    <button type="submit" class="alert alert-success btn-custom" role="alert">
+                                        @Model.answers[i].Type @Model.answers[i].contentAnswer
+                                    </button>
+                                </form>
+                            </div>
+                        }
+                    }
+
+                </div>
+
+                </div>
+        </div>
+    </div>
+</div>
